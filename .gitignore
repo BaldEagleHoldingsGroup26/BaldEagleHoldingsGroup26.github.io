@@ -1,0 +1,23 @@
+# macOS
+.DS_Store
+._*
+
+# editors
+.vscode/
+.idea/
+*.swp
+
+# never commit video files — GitHub Pages has a 1 GB repo soft limit and a
+# 100 MB hard per-file limit. Host video on YouTube and embed it.
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+
+# secrets — nothing in this repo should ever need one, but belt and braces
+.env
+.env.*
+*.pem
+*.key
+id_rsa*

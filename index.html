@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Steve Carlsen — ePortfolio</title>
+<meta name="description" content="Steve Carlsen — Information Technology student at Utah Valley University. Projects, skills, and experience.">
+
+<!--
+  =====================================================================
+  EDIT ME FIRST.
+  Every editable value is wrapped in double curly braces.
+  See README.md for how to find and replace them, or run ./fill.sh
+  =====================================================================
+-->
+
+<style>
+  /* ---------- tokens ---------- */
+  :root{
+    --bg:#ffffff;
+    --surface:#f6f7f9;
+    --border:#e2e5ea;
+    --text:#12141a;
+    --muted:#5b6270;
+    --accent:#2f5fd0;
+    --accent-soft:#eaf0fd;
+    --radius:14px;
+    --maxw:820px;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0e1014;
+      --surface:#171a21;
+      --border:#272c36;
+      --text:#e8eaf0;
+      --muted:#9aa3b2;
+      --accent:#7aa2f7;
+      --accent-soft:#1a2338;
+    }
+  }
+
+  /* ---------- base ---------- */
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+  a{color:var(--accent);text-decoration-thickness:1px;text-underline-offset:3px}
+  a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+  h1,h2,h3{line-height:1.25;margin:0}
+  section{padding:44px 0;border-top:1px solid var(--border)}
+  section:first-of-type{border-top:none}
+  h2{
+    font-size:.78rem;text-transform:uppercase;letter-spacing:.13em;
+    color:var(--muted);font-family:var(--mono);font-weight:600;margin-bottom:18px;
+  }
+
+  /* ---------- skip link ---------- */
+  .skip{position:absolute;left:-9999px;top:0;background:var(--accent);color:#fff;padding:10px 16px;z-index:99}
+  .skip:focus{left:8px;top:8px}
+
+  /* ---------- hero ---------- */
+  .hero{padding:64px 0 44px;display:flex;gap:30px;align-items:center;flex-wrap:wrap}
+  .photo{
+    width:132px;height:132px;border-radius:50%;object-fit:cover;flex-shrink:0;
+    border:3px solid var(--border);background:var(--surface);
+    display:grid;place-items:center;
+    font:600 2.4rem/1 var(--sans);color:var(--muted);
+  }
+  .hero-text{flex:1;min-width:250px}
+  .hero h1{font-size:2.35rem;letter-spacing:-.02em}
+  .tagline{color:var(--accent);font-weight:600;margin:7px 0 0;font-size:1.05rem}
+  .loc{color:var(--muted);font-size:.9rem;margin:4px 0 0;font-family:var(--mono)}
+  .intro{margin:22px 0 0;font-size:1.05rem}
+
+  /* ---------- links row ---------- */
+  .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+  .btn{
+    display:inline-block;padding:9px 17px;border-radius:999px;
+    border:1px solid var(--border);background:var(--surface);
+    color:var(--text);text-decoration:none;font-size:.9rem;font-weight:500;
+    transition:border-color .15s,background .15s;
+  }
+  .btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+  .btn.primary:hover{opacity:.9;background:var(--accent)}
+
+  /* ---------- video ---------- */
+  .video{
+    position:relative;padding-bottom:56.25%;height:0;overflow:hidden;
+    border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);
+  }
+  .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+  .cap{color:var(--muted);font-size:.87rem;margin-top:10px}
+
+  /* ---------- cards ---------- */
+  .card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);padding:22px 24px;margin-bottom:16px;
+  }
+  .card h3{font-size:1.13rem;margin-bottom:3px}
+  .card .meta{font-family:var(--mono);font-size:.8rem;color:var(--muted);margin-bottom:12px}
+  .card p{margin:0 0 12px}
+  .card ul{margin:0 0 12px;padding-left:20px}
+  .card li{margin-bottom:5px}
+  .card > :last-child{margin-bottom:0}
+
+  /* ---------- tags ---------- */
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}
+  .tag{
+    font-family:var(--mono);font-size:.76rem;padding:4px 10px;border-radius:6px;
+    background:var(--accent-soft);color:var(--accent);border:1px solid var(--border);
+  }
+
+  /* ---------- skills ---------- */
+  .skillgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px}
+  .skillgrid h3{font-size:.95rem;margin-bottom:8px}
+  .skillgrid ul{margin:0;padding-left:19px;color:var(--muted);font-size:.94rem}
+  .skillgrid li{margin-bottom:4px}
+
+  /* ---------- footer ---------- */
+  footer{
+    border-top:1px solid var(--border);padding:26px 0 44px;
+    color:var(--muted);font-size:.85rem;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+  footer .mono{font-family:var(--mono)}
+
+  @media (max-width:560px){
+    body{font-size:16px}
+    .hero{padding-top:44px;gap:22px}
+    .hero h1{font-size:1.95rem}
+    .photo{width:104px;height:104px;font-size:2rem}
+  }
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="wrap">
+
+  <!-- ============ HERO — rubric: name 1pt, photo 3pts, intro 1pt ============ -->
+  <header class="hero" id="main">
+    <!-- Put your photo at assets/photo.jpg. If it 404s, initials show instead
+         and you silently lose 3 points. VERIFY IT LOADS ON THE LIVE URL. -->
+    <img class="photo" src="assets/photo.jpg"
+         alt="Portrait of Steve Carlsen"
+         onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'photo',textContent:'SC'}))">
+
+    <div class="hero-text">
+      <h1>Steve Carlsen</h1>
+      <p class="tagline">Cybersecurity Student · 20+ Years in IT Support & Field Service</p>
+      <p class="loc">Woods Cross, Utah &nbsp;·&nbsp; Utah Valley University</p>
+    </div>
+  </header>
+
+  <main>
+
+    <section>
+      <h2>About</h2>
+      <!-- 1 rubric point. Write this yourself — 3 to 5 sentences.
+           Beats: who you are + what you're studying + what you actually
+           build or run + where you're headed. -->
+      <p class="intro">I have spent more than twenty years in IT support and field service - desk-side, remote, and on-site - most recently as a technician with Hemmersbach and before that as a field engineer with Unisys. I am a sophomore at Utah Valley University finishing an Associate in Science in Information Systems and Technology this spring, then continuing toward a Bachelor of Science in Cybersecurity. CompTIA A+ is done and Network+ is in progress. The goal is to move from fixing systems to defending them, in a SOC or security analyst role.</p>
+
+      <div class="links">
+        <a class="btn primary" href="https://www.linkedin.com/in/steve-carlsen-9820b537b" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://github.com/BaldEagleHoldingsGroup26" target="_blank" rel="noopener">GitHub</a>
+        <a class="btn" href="assets/resume.pdf" target="_blank" rel="noopener">Résumé (PDF)</a>
+        <a class="btn" href="mailto:stevec0970@gmail.com">Email</a>
+      </div>
+    </section>
+
+    <!-- ============ VIDEO — rubric: 5 pts. Half the grade. ============ -->
+    <section>
+      <h2>Me in 30 Seconds</h2>
+      <div class="video">
+        <!-- Upload to YouTube as UNLISTED (not Private — Private is unviewable
+             to your instructor and scores 0). Paste only the 11-char video ID.
+             youtube-nocookie.com = privacy-enhanced mode, no tracking cookies. -->
+        <iframe src="https://www.youtube-nocookie.com/embed/voxjKEwfG5E"
+                title="Steve Carlsen — 30 second introduction"
+                loading="lazy"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen></iframe>
+      </div>
+      <p class="cap">
+        Trouble with the embed?
+        <a href="https://youtu.be/voxjKEwfG5E" target="_blank" rel="noopener">Open the video directly</a>.
+      </p>
+    </section>
+
+    <!-- ============ CAREER ITEM — rubric: at least one required ============ -->
+    <section>
+      <h2>Experience &amp; Credentials</h2>
+
+      <article class="card">
+        <h3>IT Support &amp; Field Service</h3>
+        <p class="meta">20+ years · currently Desk-Side Technician, Hemmersbach LLC</p>
+        <p>Field engineering, desk-side and remote support, and independent IT
+           consulting since 2012. ServiceNow ticketing and SLA compliance,
+           hardware and software troubleshooting, and new-hire training.
+           Full history in the résumé.</p>
+        <ul>
+          <li><strong>CompTIA A+</strong> — completed</li>
+          <li><strong>CompTIA Network+</strong> — in progress</li>
+          <li><strong>CompTIA Security+</strong> — planned, Spring 2026</li>
+        </ul>
+        <div class="links" style="margin-top:18px">
+          <a class="btn primary" href="assets/resume.pdf" target="_blank" rel="noopener">Download Résumé (PDF)</a>
+          <a class="btn" href="https://www.linkedin.com/in/steve-carlsen-9820b537b" target="_blank" rel="noopener">LinkedIn Profile</a>
+        </div>
+        <div class="tags">
+          <span class="tag">ServiceNow</span>
+          <span class="tag">Help Desk</span>
+          <span class="tag">Field Service</span>
+          <span class="tag">SLA Compliance</span>
+          <span class="tag">CompTIA A+</span>
+        </div>
+      </article>
+
+      <!-- ================================================================
+           COMMENTED OUT at Steve's request — homelab / Linux write-up.
+           This belongs in ePortfolio Part 3 (Projects + Skills, due Oct 9),
+           which is the assignment that actually asks for it. Uncomment the
+           block below then, fill in the real numbers, and it's done.
+
+      <article class="card">
+        <h3>Self-Hosted Server Infrastructure &amp; Git Workflow</h3>
+        <p class="meta">Personal homelab &middot; ongoing</p>
+        <p>HOW MANY SERVERS, HOW LONG, WHAT THEY RUN</p>
+        <ul>
+          <li>Provisioned and hardened Linux hosts (SSH key-only auth, firewall rules)</li>
+          <li>Configuration and project code versioned in Git across all hosts</li>
+          <li>ONE THING THAT BROKE AND HOW YOU FIXED IT</li>
+        </ul>
+        <div class="tags">
+          <span class="tag">Linux</span>
+          <span class="tag">Git</span>
+          <span class="tag">SSH</span>
+          <span class="tag">Server Administration</span>
+        </div>
+      </article>
+
+           ================================================================ -->
+    </section>
+
+    <section>
+      <h2>Skills</h2>
+      <div class="skillgrid">
+        <div>
+          <h3>Networking &amp; Protocols</h3>
+          <ul>
+            <li>TCP/IP, IPv4 &amp; IPv6</li>
+            <li>DHCP, DNS, SSH, HTTP/S</li>
+            <li>VLANs, subnetting, LAN/WAN</li>
+            <li>Routers, switches, firewalls</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Security &amp; Monitoring</h3>
+          <ul>
+            <li>Packet capture &amp; analysis</li>
+            <li>Firewall configuration, ACLs</li>
+            <li>VPNs, IPsec, SSL/TLS</li>
+            <li>RADIUS, TACACS+, IDS/IPS</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Tools</h3>
+          <ul>
+            <li>Wireshark, Nmap, Nessus</li>
+            <li>ServiceNow</li>
+            <li>Visio, draw.io</li>
+            <li>Windows &amp; Linux administration</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <article class="card">
+        <h3>Associate in Science — Information Systems &amp; Technology</h3>
+        <p class="meta">Utah Valley University · College of Engineering &amp; Technology · expected Spring 2027</p>
+        <p>Sophomore standing, 3.34 GPA. Continuing toward a Bachelor of Science
+           in Cybersecurity at UVU.</p>
+        <div class="tags">
+          <span class="tag">AS · Info Systems &amp; Technology</span>
+          <span class="tag">BS · Cybersecurity (in progress)</span>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <h2>Coursework</h2>
+      <article class="card">
+        <h3>INFO 1120 — Information Systems &amp; Technology Fundamentals</h3>
+        <p class="meta">Utah Valley University · Fall 2026</p>
+        <p>Enterprise systems, computer architecture, operating systems, networking,
+           cybersecurity, databases, and IT career paths. Coursework and projects
+           from this class will be added here as the term progresses.</p>
+      </article>
+    </section>
+
+  </main>
+
+  <footer>
+    <span>© <span id="yr">2026</span> Steve Carlsen</span>
+    <span class="mono">Built with HTML &amp; CSS · Hosted on GitHub Pages</span>
+  </footer>
+
+</div>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
